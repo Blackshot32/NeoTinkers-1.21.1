@@ -1,0 +1,26 @@
+{
+  "type": "tconstruct:showcase",
+  "title": "Mejoras",
+  "item": {
+    "type": "forge:nbt",
+    "item": "tconstruct:creative_slot",
+    "nbt": {
+      "slot": "upgrades"
+    }
+  },
+  "tooltip": [
+    "Upgrade Slot Icon"
+  ],
+  "text": [
+    {
+      "text": "Las mejoras son perfeccionamientos estándar de una herramienta. Por lo general se aplican usando un objeto y 'impregnándole' algo de sus cualidades mágicas, como el redstone, que hace las herramientas más rápidas. "
+    },
+    {
+      "text": "La mayoría de las herramientas empiezan con unas 3 ranuras de mejora, aunque es posible conseguir más ranuras mediante otros tipos de modificadores."
+    },
+    {
+      "text": "La Fundición Pequeña de Thruul M'Gon tiene una lista completa de las mejoras disponibles en las herramientas, junto con la Enciclopedia del Ingenio.",
+      "paragraph": true
+    }
+  ]
+}

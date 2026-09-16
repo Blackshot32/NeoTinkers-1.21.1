@@ -1,0 +1,19 @@
+{
+  "tool": "tconstruct:shuriken",
+  "text": [
+    {
+      "text": "Los shurikens son munición rápida y desechable pensada para mantener a los monstruos a raya."
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "No pueden recibir muchos modificadores, pero aun así hacen un daño decente.",
+      "paragraph": true
+    }
+  ],
+  "properties": [
+    "Opción a distancia rápida y desechable",
+    "No requiere otra herramienta para dispararla"
+  ]
+}

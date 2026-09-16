@@ -1,0 +1,19 @@
+{
+  "tool": "tconstruct:flint_and_brick",
+  "text": [
+    {
+      "text": "Pedernal y Ladrillo es una herramienta económica y eficaz para encender fuegos."
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "A diferencia de la mayoría de las demás herramientas, se fabrica en una estación de fabricación o en una mesa de trabajo."
+    }
+  ],
+  "properties": [
+    "Crea fuego",
+    "Empieza con Ígneo 1",
+    "Se repara con ladrillos cocidos o chamuscados"
+  ]
+}

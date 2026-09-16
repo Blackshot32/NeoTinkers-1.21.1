@@ -1,0 +1,13 @@
+{
+  "title": "Selena",
+  "image": {
+    "file": "tconstruct:book/images/selena.png",
+    "width": 95,
+    "height": 105
+  },
+  "text": [
+    {
+      "text": "Yo, Selena Arcadia Eodhan, Bibliotecaria del Gremio de Artesanos de Slime y Líder de la Unidad Militar Especial de Slime, les deseo a todos gran habilidad en sus estudios y gran fortuna en el campo."
+    }
+  ]
+}

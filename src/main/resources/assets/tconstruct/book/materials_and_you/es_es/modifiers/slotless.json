@@ -1,0 +1,26 @@
+{
+  "type": "tconstruct:showcase",
+  "title": "Modificadores sin ranura",
+  "item": {
+    "type": "forge:nbt",
+    "item": "tconstruct:creative_slot",
+    "nbt": {
+      "slot": "slotless"
+    }
+  },
+  "tooltip": [
+    "Slotless Icon"
+  ],
+  "text": [
+    {
+      "text": "Los modificadores sin ranura no requieren ranuras, a diferencia de todos los demás tipos de modificadores. Normalmente esto significa que el modificador o bien tiene alguna contrapartida o bien su efecto es menor. "
+    },
+    {
+      "text": "Un tipo notable de modificadores sin ranura son los modificadores de bonificación, que otorgan ranuras de modificador adicionales. Existen muchos que otorgan más ranuras de mejora, y me han dicho que incluso hay algunos que otorgan más ranuras de habilidad."
+    },
+    {
+      "text": "La Fundición Pequeña de Thruul M'Gon tiene una lista completa de los modificadores sin ranura disponibles en las herramientas, junto con la Enciclopedia del Ingenio.",
+      "paragraph": true
+    }
+  ]
+}

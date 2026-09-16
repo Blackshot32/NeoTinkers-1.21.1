@@ -1,0 +1,26 @@
+{
+  "type": "tconstruct:showcase",
+  "title": "Habilidades",
+  "item": {
+    "type": "forge:nbt",
+    "item": "tconstruct:creative_slot",
+    "nbt": {
+      "slot": "abilities"
+    }
+  },
+  "tooltip": [
+    "Ability Slot Icon"
+  ],
+  "text": [
+    {
+      "text": "Las habilidades son modificadores poderosos que cambian drásticamente una herramienta. Modificadores como sedoso y autofundido destacan porque ambos cambian los efectos de minar bloques, mientras que el doble empuñamiento hace que las herramientas sean mucho más fáciles de manejar. "
+    },
+    {
+      "text": "Casi todas las herramientas comienzan con una sola ranura de habilidad, y solo pueden recibir hasta 2 más, así que elige las habilidades con sabiduría."
+    },
+    {
+      "text": "La Poderosa Fundición de Thruul M'Gon tiene una lista completa de las habilidades disponibles en las herramientas, junto con la Enciclopedia del Trasteo.",
+      "paragraph": true
+    }
+  ]
+}

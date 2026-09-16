@@ -1,0 +1,17 @@
+{
+  "tool": "tconstruct:hand_axe",
+  "text": [
+    {
+      "text": "El hacha de mano es una herramienta básica de tala. Es eficaz con la madera y las hojas. Funciona como arma, como herramienta, o como ambas. Tú decides."
+    },
+    {
+      "text": "\n"
+    }
+  ],
+  "properties": [
+    "Basic mining tool",
+    "Effective on wood",
+    "Breaks leaves really fast",
+    "Strips woods logs with ease"
+  ]
+}

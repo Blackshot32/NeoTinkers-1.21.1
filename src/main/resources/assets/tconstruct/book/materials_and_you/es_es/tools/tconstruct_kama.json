@@ -1,0 +1,15 @@
+{
+  "tool": "tconstruct:kama",
+  "text": [
+    {
+      "text": "La kama es una herramienta de siega de precisión, fantástica para segar plantas y esquilar animales."
+    }
+  ],
+  "properties": [
+    "Labra la tierra",
+    "Interactúa con los cultivos para cosecharlos",
+    "Esquila bloques y animales",
+    "Eficaz con las plantas",
+    "Puede atacar en área"
+  ]
+}

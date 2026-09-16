@@ -1,0 +1,26 @@
+{
+  "type": "tconstruct:showcase",
+  "title": "Modificadores de defensa",
+  "item": {
+    "type": "forge:nbt",
+    "item": "tconstruct:creative_slot",
+    "nbt": {
+      "slot": "defense"
+    }
+  },
+  "tooltip": [
+    "Defense Slot Icon"
+  ],
+  "text": [
+    {
+      "text": "Los modificadores de defensa son un tipo de modificador exclusivo de la armadura, que aumenta la protección contra amenazas concretas como el fuego o el empuje. Ofrecen otra forma de personalizar la armadura, ya que la mayoría de los tipos de armadura carecen de rasgos de material. "
+    },
+    {
+      "text": "Normalmente, la armadura con una gran cantidad de ranuras de defensa empieza con menos ranuras de mejora, lo que significa que se sacrifica funcionalidad a cambio de protección."
+    },
+    {
+      "text": "La Poderosa Fundición también tiene una lista completa de los modificadores de defensa disponibles en las herramientas, junto con la Enciclopedia del Trasteo.",
+      "paragraph": true
+    }
+  ]
+}

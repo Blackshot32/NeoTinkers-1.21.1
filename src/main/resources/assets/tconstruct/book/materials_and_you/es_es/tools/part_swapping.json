@@ -1,0 +1,14 @@
+{
+  "title": "Intercambio de piezas",
+  "image": {
+    "file": "tconstruct:book/images/part_swapping.png",
+    "width": 136,
+    "height": 72
+  },
+  "text": [
+    {
+      "text": "¿Alguna vez has deseado poder deshacer un error del pasado? Por suerte, con las herramientas puedes. Si quieres cambiar el material de una de las piezas, coloca la herramienta con la nueva pieza deseada en la estación de Tinker. Para las herramientas que tienen varias piezas iguales, prueba con distintas ranuras hasta dar con la correcta. En el caso de las armaduras, muchas veces puedes cambiar las piezas usando una mesa de fundición.",
+      "paragraph": false
+    }
+  ]
+}

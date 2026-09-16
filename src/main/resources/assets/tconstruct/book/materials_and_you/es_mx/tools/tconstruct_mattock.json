@@ -1,0 +1,18 @@
+{
+  "tool": "tconstruct:mattock",
+  "text": [
+    {
+      "text": "El azadón es una herramienta versátil. Es eficaz con troncos y tierra."
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "Puede crear la granja de tus sueños."
+    }
+  ],
+  "properties": [
+    "Labra la tierra",
+    "Eficaz con la tierra y los troncos"
+  ]
+}

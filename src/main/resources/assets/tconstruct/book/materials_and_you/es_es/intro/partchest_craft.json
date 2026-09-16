@@ -1,0 +1,9 @@
+{
+  "title": "Fabricación del cofre de piezas",
+  "recipe": "tconstruct:tables/part_chest",
+  "description": [
+    {
+      "text": "Nunca sabes cuándo vas a volver a necesitar esa pieza de herramienta que no usaste."
+    }
+  ]
+}

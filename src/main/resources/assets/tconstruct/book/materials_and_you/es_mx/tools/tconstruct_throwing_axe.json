@@ -1,0 +1,19 @@
+{
+  "tool": "tconstruct:throwing_axe",
+  "text": [
+    {
+      "text": "Las hachas arrojadizas son un proyectil que golpea más fuerte, pero con menos alcance."
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "Las hachas arrojadizas tampoco pueden recibir modificadores, pero ¿quién los necesita?",
+      "paragraph": true
+    }
+  ],
+  "properties": [
+    "Opción a distancia rápida y desechable",
+    "No requiere otra herramienta para lanzarla"
+  ]
+}

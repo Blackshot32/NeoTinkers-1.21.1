@@ -1,0 +1,14 @@
+{
+  "tool": "tconstruct:fishing_rod",
+  "text": [
+    {
+      "text": "La caña de pescar es útil para combatir objetivos cercanos sin malgastar munición. Y como bonus, también pesca peces si la usas en el agua."
+    }
+  ],
+  "properties": [
+    "Arma a distancia de corto alcance",
+    "Daña a los monstruos al recoger el sedal",
+    "No requiere munición",
+    "Puede pescar peces"
+  ]
+}

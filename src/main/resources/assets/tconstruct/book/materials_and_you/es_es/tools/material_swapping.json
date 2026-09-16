@@ -1,0 +1,14 @@
+{
+  "title": "Cambio de material de la herramienta",
+  "image": {
+    "file": "tconstruct:book/images/material_swapping.png",
+    "width": 136,
+    "height": 72
+  },
+  "text": [
+    {
+      "text": "También puedes cambiar piezas sacrificando otra herramienta del mismo tipo, siempre que esa herramienta no tenga modificadores. Según la ranura en la que coloques la herramienta, será el material que se intercambie. Esto es útil para cambiar los materiales de herramientas que de otro modo no se pueden fabricar.",
+      "paragraph": false
+    }
+  ]
+}

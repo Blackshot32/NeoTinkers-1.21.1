@@ -1,0 +1,16 @@
+{
+  "title": "Cofres de almacenamiento",
+  "text": [
+    {
+      "text": "Así que quieres guardar tus piezas extra en un cofre especial, ¿eh? Si no, mala suerte, de todos modos tienes la opción. "
+    },
+    {
+      "text": "Los cofres de piezas te permiten guardar la gran cantidad de piezas extra que puedas tener. Cada ranura puede contener una pila de 8 piezas como máximo. Si necesitas más que eso, estás haciendo algo mal o tienes recetas muy rebuscadas.",
+      "paragraph": true
+    },
+    {
+      "text": "Ah, ¿ese cofre es demasiado restrictivo? ¡Prueba el cofre de Tinker! Puede guardar cualquier objeto en un total de 64 ranuras, aunque cada ranura solo guarda 16 objetos.",
+      "paragraph": true
+    }
+  ]
+}

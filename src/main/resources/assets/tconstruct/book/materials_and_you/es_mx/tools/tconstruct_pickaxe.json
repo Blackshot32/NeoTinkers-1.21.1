@@ -1,0 +1,20 @@
+{
+  "tool": "tconstruct:pickaxe",
+  "text": [
+    {
+      "text": "El pico es una herramienta de minería precisa. Es eficaz con la piedra y los minerales."
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "Rompe bloques, ¿vale?"
+    }
+  ],
+  "properties": [
+    "Herramienta de minería básica",
+    "Es un pico",
+    "Mina bloques de piedra y similares",
+    "Daño perforante adicional"
+  ]
+}

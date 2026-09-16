@@ -1,0 +1,19 @@
+intro=Introducción
+
+melee_harvest_materials=Materiales generales de nivel 1
+melee_harvest_materials.subtext=Estos materiales se pueden colocar en el constructor de partes para crear piezas de herramientas para armas cuerpo a cuerpo o herramientas de recolección.
+ranged_materials=Materiales a distancia de nivel 1
+ranged_materials.subtext=Estos materiales se pueden colocar en el constructor de partes para crear piezas de herramientas para armas a distancia como arcos.
+ammo_materials=Materiales básicos de munición
+ammo_materials.subtext=Estos materiales son ideales para fabricar tus primeras flechas y shurikens.
+
+tools=Herramientas
+tools.group_general=General
+tools.group_ranged=A distancia
+tools.group_info=Información
+
+armor=Armadura básica
+armor.subtext=La armadura básica permite una protección elemental sin necesidad de cazar recursos ni construir maquinaria. Esto otorgará una defensa limitada, ¡pero aún hay muchas oportunidades para mejorar tu armadura! ¿Qué cosas divertidas crearás?
+
+modifiers=Modificadores
+further_reading=Lecturas adicionales

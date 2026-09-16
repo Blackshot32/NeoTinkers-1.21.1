@@ -1,0 +1,16 @@
+{
+  "title": "Estación de Tinker",
+  "text": [
+    {
+      "text": "Para completar el primer paso de tu gran aventura trasteando, es hora de fabricar tu primera herramienta. Puede que no sea la mejor al principio, pero es tu obra, y deberías sentirte orgulloso de ella."
+    },
+    {
+      "text": "¡Una vez que tengas todas las piezas que necesitas para hacer una herramienta, la construcción puede comenzar! Primero consigue una Estación de Tinker, luego selecciona qué herramienta quieres hacer y ¡a trastear! Ponle un nombre antes de perder la oportunidad. ",
+      "paragraph": true
+    },
+    {
+      "text": "También puedes usar la Estación de Tinker para añadir modificadores a tus herramientas. La mesa básica solo tiene espacio suficiente para combinar tres piezas como máximo, lo que significa que no se pueden fabricar herramientas anchas. Otros maestros artesanos conocen el secreto para hacer herramientas de cuatro o cinco piezas.",
+      "paragraph": true
+    }
+  ]
+}

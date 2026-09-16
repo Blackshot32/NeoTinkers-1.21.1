@@ -1,0 +1,13 @@
+{
+  "title": "Reciclaje de herramientas",
+  "image": {
+    "file": "tconstruct:book/images/recycling.png",
+    "width": 170,
+    "height": 64
+  },
+  "text": [
+    {
+      "text": "¿Cambiaste de opinión sobre una herramienta? Puedes usar algo de veneno para desmontarla en el constructor de piezas y rescatar una de sus piezas. Es posible rescatar una segunda pieza, con una probabilidad mayor en herramientas reparadas, lo que convierte esto en la forma más económica de cambiar piezas. Las dagas deben apilarse hasta 2 para poder reciclarse."
+    }
+  ]
+}

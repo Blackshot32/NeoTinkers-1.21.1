@@ -1,0 +1,20 @@
+{
+  "tool": "tconstruct:crossbow",
+  "text": [
+    {
+      "text": "La ballesta es útil para quienes quieren mantenerse ágiles y listos para el combate"
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "Nunca deberías cruzar un arco",
+      "paragraph": true
+    }
+  ],
+  "properties": [
+    "Arco rápido y ágil",
+    "Puede mantener una flecha lista para disparar",
+    "Le encanta hacer fiesta con fuegos artificiales"
+  ]
+}

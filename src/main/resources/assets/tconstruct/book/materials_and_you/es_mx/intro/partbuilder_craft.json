@@ -1,0 +1,10 @@
+{
+  "title": "Fabricación del constructor de piezas",
+  "recipe": "tconstruct:tables/part_builder",
+  "grid_size": "small",
+  "description": [
+    {
+      "text": "Una vez que hayas creado algunos patrones, fabrica el constructor de piezas para empezar a hacer herramientas."
+    }
+  ]
+}

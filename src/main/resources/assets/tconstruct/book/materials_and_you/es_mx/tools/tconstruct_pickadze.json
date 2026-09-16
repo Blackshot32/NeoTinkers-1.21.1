@@ -1,0 +1,20 @@
+{
+  "tool": "tconstruct:pickadze",
+  "text": [
+    {
+      "text": "El nombre correcto de esta herramienta sería azadón-pico, pero a la gente le gusta lo conocido."
+    },
+    {
+      "text": "\n"
+    },
+    {
+      "text": "Puede abrir caminos hacia la gloria."
+    }
+  ],
+  "properties": [
+    "Crea senderos",
+    "Mina bloques de piedra y similares",
+    "Rompe tierras blandas y grava",
+    "Nivel de recolección limitado a madera"
+  ]
+}

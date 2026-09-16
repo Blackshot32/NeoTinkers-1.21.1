@@ -1,0 +1,9 @@
+{
+  "title": "Fabricación de la estación de Tinker",
+  "recipe": "tconstruct:tables/tinker_station",
+  "description": [
+    {
+      "text": "Espero que aún te sobren algunos patrones. Si no, siempre puedes hacer más."
+    }
+  ]
+}

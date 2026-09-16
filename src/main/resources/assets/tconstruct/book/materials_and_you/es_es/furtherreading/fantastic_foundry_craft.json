@@ -1,0 +1,10 @@
+{
+  "title": "Fundición Fantástica por Nemea",
+  "recipe": "tconstruct:common/fantastic_foundry",
+  "grid_size": "small",
+  "description": [
+    {
+      "text": "La tecnología más novedosa en metales fundidos. ¡Sáltate la fundición y empieza con una forja! Aprende más en §oForja Fantástica§r, de Nemea."
+    }
+  ]
+}

@@ -317,14 +317,14 @@ public class MeltingModuleInventory implements IItemHandlerModifiable {
     for (int i = 0; i < modules.length; i++) {
       if (modules[i] != null && !modules[i].getStack().isEmpty()) {
         CompoundTag moduleTag = modules[i].writeToTag(registries);
-        moduleTag.putByte(TAG_SLOT, (byte)i);
+        moduleTag.putInt(TAG_SLOT, i);
         list.add(moduleTag);
       }
     }
     if (!list.isEmpty()) {
       nbt.put(TAG_ITEMS, list);
     }
-    nbt.putByte(TAG_SIZE, (byte)modules.length);
+    nbt.putInt(TAG_SIZE, modules.length);
     return nbt;
   }
 
@@ -334,7 +334,12 @@ public class MeltingModuleInventory implements IItemHandlerModifiable {
    */
   public void readFromTag(HolderLookup.Provider registries, CompoundTag nbt) {
     if (!strictSize) {
-      int newSize = nbt.getByte(TAG_SIZE) & 255;
+      int newSize = modules.length;
+      if (nbt.contains(TAG_SIZE, Tag.TAG_INT)) {
+        newSize = nbt.getInt(TAG_SIZE);
+      } else if (nbt.contains(TAG_SIZE, Tag.TAG_ANY_NUMERIC)) {
+        newSize = nbt.getByte(TAG_SIZE) & 255;
+      }
       if (newSize != modules.length) {
         modules = Arrays.copyOf(modules, newSize);
       }
@@ -349,11 +354,14 @@ public class MeltingModuleInventory implements IItemHandlerModifiable {
     ListTag list = nbt.getList(TAG_ITEMS, Tag.TAG_COMPOUND);
     for (int i = 0; i < list.size(); i++) {
       CompoundTag item = list.getCompound(i);
-      if (item.contains(TAG_SLOT, Tag.TAG_BYTE)) {
-        int slot = item.getByte(TAG_SLOT) & 255;
-        if (validSlot(slot)) {
-          getModule(slot).readFromTag(registries, item);
-        }
+      int slot = -1;
+      if (item.contains(TAG_SLOT, Tag.TAG_INT)) {
+        slot = item.getInt(TAG_SLOT);
+      } else if (item.contains(TAG_SLOT, Tag.TAG_ANY_NUMERIC)) {
+        slot = item.getByte(TAG_SLOT) & 255;
+      }
+      if (slot >= 0 && validSlot(slot)) {
+        getModule(slot).readFromTag(registries, item);
       }
     }
   }

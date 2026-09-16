@@ -444,6 +444,23 @@ public abstract class MultiblockCuboid<T extends MultiblockStructureData> {
     }
     // NbtUtils.writeBlockPos now produces an int-array tag rather than a compound
     ListTag list = rootTag.getList(key, Tag.TAG_INT_ARRAY);
+    if (list.isEmpty()) {
+      // Fallback for legacy 1.20 and older saves
+      ListTag compoundList = rootTag.getList(key, Tag.TAG_COMPOUND);
+      if (!compoundList.isEmpty()) {
+        List<BlockPos> collection = new ArrayList<>(compoundList.size());
+        for (int i = 0; i < compoundList.size(); i++) {
+          CompoundTag item = compoundList.getCompound(i);
+          if (item.contains("X", Tag.TAG_ANY_NUMERIC)) {
+            BlockPos pos = new BlockPos(item.getInt("X"), item.getInt("Y"), item.getInt("Z"));
+            if (!pos.equals(BlockPos.ZERO)) {
+              collection.add(pos.offset(offset));
+            }
+          }
+        }
+        return collection;
+      }
+    }
     List<BlockPos> collection = new ArrayList<>(list.size());
     for (int i = 0; i < list.size(); i++) {
       int[] coords = list.getIntArray(i);

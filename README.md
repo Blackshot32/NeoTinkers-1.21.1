@@ -24,6 +24,27 @@ Haz clic en los enlaces para descargar directamente los archivos e instalarlos e
 
 ---
 
+## 🛠️ Mejoras y Correcciones Propias en este Fork
+
+A diferencia de otros ports no oficiales, este fork incluye soluciones a problemas críticos y soporte de idiomas completo:
+
+1. **Corrección de Bug #29 (Crash de la Interfaz en Fundiciones Grandes)**:
+   - En fundiciones medianas y grandes (>127 ranuras de fundido, e.g. 7x7x6), el conteo de ranuras sufría un desbordamiento de `byte` al serializarse en NBT (`TAG_SIZE` y `TAG_SLOT`), truncando el inventario en el cliente a 38 ranuras.
+   - Al abrir la GUI, el servidor enviaba el paquete con los datos completos provocando un `IndexOutOfBoundsException: Index 76 out of bounds for length 76` y expulsando al jugador.
+   - **Solución**: Se expandió la serialización a enteros (`int`) con compatibilidad regresiva, eliminando por completo el crash y el cierre espontáneo de la GUI.
+
+2. **Corrección de Bug #28 (Desaparición Visual de Fluidos al Recargar Mundo/Chunks)**:
+   - Al recargar el mundo o salir y entrar de chunks, los metales y fluidos de la fundición desaparecían visualmente (a pesar de seguir adentro).
+   - **Causa raíz**: En Minecraft 1.21+, `NbtUtils.writeBlockPos` genera `Tag.TAG_INT_ARRAY` en lugar de `Tag.TAG_COMPOUND`. La función de utilidad `TagUtil.readOptionalPos` descartaba las etiquetas de posición (`min`, `max`, `TAG_MASTER_POS`), provocando que la estructura multirbloque y los bloques sirvientes quedaran en `null` en el cliente y se cancelara el renderizado.
+   - **Solución**: `TagUtil.readOptionalPos` y `MultiblockCuboid.readPosList` ahora soportan tanto `TAG_INT_ARRAY` como formato legado de `TAG_COMPOUND`, restaurando la sincronización visual inmediata.
+
+3. **Traducción Completa al Español (`es_es` y `es_mx`)**:
+   - Más de 3,500 claves traducidas y revisadas con asistencia de Hermes (DeepSeek).
+   - Nombres de materiales intuitivos, descripciones de rasgos/modificadores claros y consistencia técnica con la ingeniería de Minecraft y el lore de Tinkers' Construct.
+   - Soporte tanto para Español de España (`es_es`, e.g. cubos, Mayús) como Español de México / Hispanoamérica (`es_mx`, e.g. cubetas, Shift).
+
+---
+
 ## 🛠️ Cambios Clave en la Arquitectura 1.21.1
 
 * **Data Components**: Se migró el almacenamiento de herramientas (`ToolStack`, modificadores, materiales y estadísticas) desde NBT libre hacia `DataComponentType<CompoundTag>` (`ToolDataComponents.TOOL_DATA`), adaptándose a la eliminación de NBT y capabilities en `ItemStack` en Minecraft 1.20.5+.

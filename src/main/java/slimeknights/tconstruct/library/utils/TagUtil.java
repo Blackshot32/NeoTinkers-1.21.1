@@ -23,9 +23,15 @@ public final class TagUtil {
    */
   @Nullable
   public static BlockPos readOptionalPos(CompoundTag parent, String key, BlockPos offset) {
-    if (parent.contains(key, Tag.TAG_COMPOUND)) {
-      // readBlockPos now takes the key directly and returns an Optional, so read from the parent and offset if present
+    if (parent.contains(key, Tag.TAG_INT_ARRAY)) {
+      // In 1.21+, NbtUtils.writeBlockPos produces an IntArrayTag
       return NbtUtils.readBlockPos(parent, key).map(pos -> pos.offset(offset)).orElse(null);
+    } else if (parent.contains(key, Tag.TAG_COMPOUND)) {
+      // Backwards compatibility with 1.20 and older compound format
+      CompoundTag tag = parent.getCompound(key);
+      if (tag.contains("X", Tag.TAG_ANY_NUMERIC) && tag.contains("Y", Tag.TAG_ANY_NUMERIC) && tag.contains("Z", Tag.TAG_ANY_NUMERIC)) {
+        return new BlockPos(tag.getInt("X"), tag.getInt("Y"), tag.getInt("Z")).offset(offset);
+      }
     }
     return null;
   }

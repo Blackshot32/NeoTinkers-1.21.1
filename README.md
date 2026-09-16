@@ -10,13 +10,17 @@
 
 ---
 
-## 📦 Requisitos y Descargas
+## 📥 Descargas Directas (.jar listos para jugar)
 
-Este mod requiere obligatoriamente **Neo Mantle** para 1.21.1:
+Haz clic en los enlaces para descargar directamente los archivos e instalarlos en tu carpeta `.minecraft/mods`:
 
-1. **NeoForge**: `21.1.233` o superior en Minecraft `1.21.1`.
-2. **NeoMantle**: Incluido en las versiones de este fork.
-3. **Java**: JDK 21 LTS para compilar.
+* 📥 [**Descargar NeoTinkers-1.21.1-3.11.2-v1.29.jar** (21.0 MB)](https://github.com/Blackshot32/NeoTinkers-1.21.1/raw/main/downloads/NeoTinkers-1.21.1-3.11.2-v1.29.jar)
+* 📥 [**Descargar NeoMantle-1.21.1-1.21.0-v1.25.jar** (1.6 MB)](https://github.com/Blackshot32/NeoTinkers-1.21.1/raw/main/downloads/NeoMantle-1.21.1-1.21.0-v1.25.jar)
+
+> **Requisitos de ejecución**:
+> 1. Minecraft **1.21.1**
+> 2. **NeoForge** `21.1.233` o superior
+> 3. Ambos archivos `.jar` en la carpeta `mods`
 
 ---
 

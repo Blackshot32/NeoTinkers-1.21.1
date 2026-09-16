@@ -67,12 +67,13 @@ public class ToolDataComponents {
   }
 
   /**
-   * Sets the tool data compound on the stack. Direct replacement for the legacy {@code stack.setTag(tag)}.
+   * Publishes a snapshot of the tool data. Components may be shared by ItemStack copies,
+   * so the caller must not retain a mutable reference to the stored value.
    * @param stack  Stack to write
    * @param tag    Tag to store
    */
   public static void setTag(ItemStack stack, CompoundTag tag) {
-    stack.set(TOOL_DATA.get(), tag);
+    stack.set(TOOL_DATA.get(), tag.copy());
   }
 
   /**

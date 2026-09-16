@@ -145,7 +145,7 @@ public class ToolStack implements IToolStackView {
   private void syncToStack() {
     if (stack != null) {
       ToolDataComponents.setTag(stack, nbt);
-      syncedTag = nbt;
+      syncedTag = ToolDataComponents.getTag(stack);
     }
   }
 
@@ -181,10 +181,10 @@ public class ToolStack implements IToolStackView {
       if (!copyNbt) {
         // only a wrongly made tool will have an empty definition. check preferred to a tag check as tags may not be loaded when this is first called
         if (definition != ToolDefinition.EMPTY) {
-          // store the empty compound onto the component so the tool stack and item stack stay in sync
+          // publish a snapshot; the working compound must remain separate from the component
           // both damage and tag verification are done later, doing so now causes us to recursively call this method (though not infinite)
           ToolDataComponents.setTag(stack, nbt);
-          stored = nbt;
+          stored = ToolDataComponents.getTag(stack);
           // no need to set the damage value, if the tool wanted it set the stack would have had a tag already
         } else {
           switch (Config.COMMON.logInvalidToolStack.get()) {
@@ -281,9 +281,9 @@ public class ToolStack implements IToolStackView {
     // read the tool data from the component; copy it out so mutations stay local and write back on change
     CompoundTag stored = ToolDataComponents.getTag(stack);
     if (stored == null) {
-      stored = new CompoundTag();
-      ToolDataComponents.setTag(stack, stored);
-      this.nbt = stored;
+      this.nbt = new CompoundTag();
+      ToolDataComponents.setTag(stack, this.nbt);
+      stored = ToolDataComponents.getTag(stack);
     } else {
       this.nbt = stored.copy();
     }

@@ -3,8 +3,6 @@ package slimeknights.tconstruct.smeltery.block.entity.module;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -29,9 +27,6 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
   /** Position of the last fluid handler */
   private BlockPos lastPos = NULL_POS;
 
-  /** Map of all tank handlers at each relevant position. Used for fast switching between handlers, notably in the UI */
-  private Map<BlockPos,IFluidHandler> tankHandlers;
-
   public MultitankFuelModule(MantleBlockEntity parent, Supplier<List<BlockPos>> tankSupplier) {
     super(parent);
     this.tankSupplier = tankSupplier;
@@ -50,55 +45,32 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
     super.resetHandler(source);
   }
 
-  /** Called on structure rebuild to clear the gui handler list */
+  /** Clears connections after a structure rebuild while preserving the GUI's last fuel position. */
   public void clearFluidListeners() {
-    tankHandlers = null;
     invalidateHandlerCaches();
-    // Drop the cached ACTIVE fuel handler so findFuel() re-resolves a swapped/added/removed tank (a swapped-out lava
-    // tank's dead handler would otherwise stick and a hotter fuel like blazing blood would never be read -> "not hot
-    // enough"). This is the port's stand-in for upstream's LazyOptional invalidation listener, which never fires.
-    // Use clearLastListener(), NOT resetHandler(null): the latter also wipes lastPos, which is the fuel-tank position
-    // the client GUI needs to render the fuel gauge. Structure re-checks fire routinely (inner-block checks, servant
-    // loads, world load), so wiping lastPos here left reopened menus with a blank fuel gauge / "no fuel source" even
-    // though fuel was still being consumed (issue #7 regression). findFuel() still re-resolves correctly: with
-    // fluidHandler null it takes the lastPos branch and refetches through the rebuilt, self-healing handler map.
+    // Keep lastPos for the fuel gauge; findFuel() validates it against the current structure.
     clearLastListener();
   }
 
-  /** Called on servant load to ensure the handler is present in the cache */
+  /** Warms the capability cache when a tank servant loads. */
   public void ensureTankPresent(BlockEntity be) {
-    BlockPos pos = be.getBlockPos();
-    if (tankHandlers != null && !tankHandlers.containsKey(pos)) {
-      IFluidHandler handler = getHandlerAt(pos);
-      if (handler != null) {
-        tankHandlers.put(pos, handler);
-      }
-    }
+    getHandlerAt(be.getBlockPos());
   }
 
   /**
-   * Gets the map from position to fluid handler.
-   * The handlers are resolved through {@link #getHandlerAt} so each entry is backed by a {@link net.neoforged.neoforge.capabilities.BlockCapabilityCache}
-   * on the server (self-healing on invalidation) and re-queried on the client. We rebuild the map whenever it is null,
-   * empty, or its key set no longer matches the structure's tank positions, so a transiently-missing capability (e.g.
-   * right after a world reload, which previously left the fuel tank rendering empty / 0 temperature) recovers on a
-   * later tick rather than sticking forever.
+   * Resolves a snapshot for a multi-tank operation, preserving the structure's tank order.
+   * Only {@link #getHandlerAt} may cache connections: retaining the returned handlers in
+   * a second map would bypass NeoForge's invalidation when a tank is replaced or unloaded.
    */
   private Map<BlockPos,IFluidHandler> getTankHandlers() {
-    List<BlockPos> positions = tankSupplier.get();
-    // rebuild when the cache is null, empty, or no longer resolves every tank position. The latter is what makes the
-    // display recover after a world reload: positions that returned null on a previous (too-early) query are retried.
-    if (tankHandlers == null || tankHandlers.size() != positions.size()) {
-      Map<BlockPos,IFluidHandler> handlers = new LinkedHashMap<>();
-      for (BlockPos pos : positions) {
-        IFluidHandler handler = getHandlerAt(pos);
-        if (handler != null) {
-          handlers.put(pos, handler);
-        }
+    Map<BlockPos,IFluidHandler> handlers = new LinkedHashMap<>();
+    for (BlockPos pos : tankSupplier.get()) {
+      IFluidHandler handler = getHandlerAt(pos);
+      if (handler != null) {
+        handlers.put(pos, handler);
       }
-      tankHandlers = handlers;
     }
-    return tankHandlers;
+    return handlers;
   }
 
 
@@ -110,7 +82,7 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
    * @return   Temperature of the consumed fuel, 0 if none found
    */
   private int tryFuelPosition(BlockPos pos, boolean consume) {
-    IFluidHandler tankCap = getTankHandlers().get(pos);
+    IFluidHandler tankCap = getHandlerAt(pos);
     if (tankCap != null) {
       // if we find a valid cap, try to consume fuel from it
       int temperature = tryLiquidFuel(tankCap, consume);
@@ -130,15 +102,11 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
    */
   @Override
   public int findFuel(boolean consume) {
-    // only fetch a handler if we haven't done so
-    if (fluidHandler != null) {
-      // if we have a handler, try to use that if possible
-      int temperature = tryLiquidFuel(fluidHandler, consume);
-      if (temperature > 0) {
-        return temperature;
-      }
-    } else if (lastPos != NULL_POS) {
-      // if no handler, try to find one at the last position
+    List<BlockPos> positions = tankSupplier.get();
+    // Resolve the active connection again, through NeoForge's cache, before using it.
+    // A remembered handler may belong to a replaced tank or one outside the structure.
+    clearLastListener();
+    if (positions.contains(lastPos)) {
       int posTemp = tryFuelPosition(lastPos, consume);
       if (posTemp > 0) {
         return posTemp;
@@ -146,7 +114,7 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
     }
 
     // find a new handler among our tanks
-    for (BlockPos pos : tankSupplier.get()) {
+    for (BlockPos pos : positions) {
       // already checked the last position above, no reason to try again
       if (!pos.equals(lastPos)) {
         int posTemp = tryFuelPosition(pos, consume);
@@ -224,18 +192,15 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
 
   @Override
   public FuelInfo getFuelInfo() {
-    // if there is no position, means we have not yet consumed fuel. Just fetch the first tank
-    // TODO: should we try to find a valid fuel tank? might be a bit confusing if they have multiple tanks in the structure before melting
-    // however, a valid tank is a lot more effort to find
-
+    Map<BlockPos,IFluidHandler> handlers = getTankHandlers();
     // Y of big negative is how the UI syncs null
     BlockPos mainTank = lastPos;
-    if (mainTank.getY() == NULL_POS.getY()) {
+    if (mainTank.getY() == NULL_POS.getY() || !handlers.containsKey(mainTank)) {
       // No consumption has synced a fuel-tank position yet (freshly built or freshly (re)opened menu). Rather than
       // blindly showing the first structural tank (often an empty output tank -> blank gauge), pick the first tank that
       // actually holds a valid fuel fluid so the gauge is correct on open. This also sidesteps a stale/blank lastPos.
       mainTank = null;
-      for (Entry<BlockPos,IFluidHandler> entry : getTankHandlers().entrySet()) {
+      for (Entry<BlockPos,IFluidHandler> entry : handlers.entrySet()) {
         FluidStack fluid = entry.getValue().getFluidInTank(0);
         if (!fluid.isEmpty() && findRecipe(fluid.getFluid()) != null) {
           mainTank = entry.getKey();
@@ -252,9 +217,8 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
       }
     }
 
-    // fetch primary fuel handler. Re-resolve from the (self-healing) handler map each call rather than caching it once,
-    // so the display recovers if the handler was missing/stale on an earlier query (e.g. right after a world reload).
-    fluidHandler = getTankHandlers().get(mainTank);
+    // Use the current snapshot so replaced or reloaded tanks are reflected in the gauge.
+    fluidHandler = handlers.get(mainTank);
 
     // determine what fluid we have and hpw many other fluids we have
     FuelInfo info = super.getFuelInfo();
@@ -262,7 +226,7 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
     if (!info.isEmpty()) {
       // add display info from each handler
       FluidStack currentFuel = info.getFluid();
-      for (Entry<BlockPos,IFluidHandler> entry : getTankHandlers().entrySet()) {
+      for (Entry<BlockPos,IFluidHandler> entry : handlers.entrySet()) {
         if (!mainTank.equals(entry.getKey())) {
           IFluidHandler handler = entry.getValue();
           // sum if empty (more capacity) or the same fluid (more amount and capacity)
@@ -284,21 +248,19 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
 
   /** Gets the most recently used fluid */
   public FluidStack getLastFluid() {
-    if (fluidHandler != null) {
-      return fluidHandler.getFluidInTank(0);
-    }
+    List<BlockPos> positions = tankSupplier.get();
     BlockPos pos;
-    if (lastPos.getY() != NULL_POS.getY()) {
+    if (positions.contains(lastPos)) {
       pos = lastPos;
     } else {
-      List<BlockPos> positions = tankSupplier.get();
       if (!positions.isEmpty()) {
         pos = positions.get(0);
       } else {
         return FluidStack.EMPTY;
       }
     }
-    return getTankHandlers().getOrDefault(pos, EmptyFluidHandler.INSTANCE).getFluidInTank(0);
+    IFluidHandler handler = getHandlerAt(pos);
+    return handler == null ? FluidStack.EMPTY : handler.getFluidInTank(0);
   }
 
   @Override
@@ -311,7 +273,8 @@ public class MultitankFuelModule extends FuelModule implements IFluidHandler {
     if (tank >= 0) {
       List<BlockPos> positions = tankSupplier.get();
       if (tank < positions.size()) {
-        return getTankHandlers().getOrDefault(positions.get(tank), EmptyFluidHandler.INSTANCE);
+        IFluidHandler handler = getHandlerAt(positions.get(tank));
+        return handler == null ? EmptyFluidHandler.INSTANCE : handler;
       }
     }
     return EmptyFluidHandler.INSTANCE;

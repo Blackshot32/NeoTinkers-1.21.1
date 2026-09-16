@@ -143,8 +143,11 @@ public abstract class FuelModule implements ContainerData {
    * @param amount  Amount of fuel to consume
    */
   public void decreaseFuel(int amount) {
-    fuel = Math.max(0, fuel - amount);
-    parent.setChangedFast();
+    int remaining = Math.max(0, fuel - amount);
+    if (remaining != fuel) {
+      fuel = remaining;
+      parent.setChangedFast();
+    }
   }
 
 

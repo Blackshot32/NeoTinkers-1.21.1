@@ -131,11 +131,10 @@ test {
     useJUnitPlatform()
 }
 
-// The src/test sources are a deferred part of the 1.21.1/NeoForge port: they still use 1.20.1/Forge APIs
-// (net.minecraftforge.*) and the ModDevGradle test source set is not yet wired to the Minecraft/NeoForge
-// classpath. Disable test compilation/execution so the main mod still builds its jar. Re-enable when porting tests.
-tasks.named('compileTestJava').configure { enabled = false }
-tasks.named('test').configure { enabled = false }
+sourceSets.test.java.srcDirs = ['src/portTest/java']
+sourceSets.test.compileClasspath += sourceSets.main.compileClasspath
+sourceSets.test.runtimeClasspath += sourceSets.main.runtimeClasspath
+
 
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
